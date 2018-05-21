@@ -1,39 +1,180 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="initial-scale=1.0">
 <title>metasta.github.io</title>
 <style>
 @charset "utf-8";
+:root {
+ --family: 'Hiragino Sans',Meiryo,sans-serif;
+ --weight: 200;
+ --width: 960px;
+}
+html {
+ font: var(--weight) 12pt/1.9 var(--family);
+ color: #333;
+}
 body {
- -webkit-text-size-adjust:100%;
- font: 12pt/1.8 sans-serif;
- width: 720px;
- margin: 0 auto;}
-a:link,
-a:visited {
- color: #a96;
- text-decoration: none;}
-.hidden {opacity:0;}
-@media screen and (max-width:640px){
- body {
-  width: 320px;
+ margin: 0 auto 10em auto;
+ max-width: var(--width);
+ padding: 0 1em;
+}
+h1 {
+ margin-top: 3em;
+ margin-bottom: 5em;
+}
+h3 {
+ font-size: 110%;
+ margin: 1em 0 .3em 0;
+}
+section {
+ box-sizing: border-box;
+ margin: 2em 0;
+ border: 3px double #333;
+ padding: 1em 2em;
+}
+section.minor {
+ border: 1px solid #666;
+ padding: calc(1em + 2px) calc(2em + 2px);
+}
+aside {
+ font: 12pt/2 'HiraMaruProN-W4','HG丸ｺﾞｼｯｸM-PRO','HGMaruGothicMPRO',Verdana,sans-serif;
+ color: #666;
+ box-sizing: border-box;
+ margin: 2em;
+ border: 1px solid #aaa;
+ border-radius: 5px;
+ padding: 2em;
+}
+@media screen and (max-width: 480px) {
+ aside {
+  font-size: 10.5pt;
+  margin: 2em 0;
+  padding: 2em 1em;
+ }
+ ol, ul {
+  margin-left: .5em;
+  padding-left: 0;
+ }
+ .score {
+  transform-origin: left top;
+  transform:scale(0.77);
  }
 }
-</style>
+p {
+ margin: 0;
+}
+ol, ul {
+ margin-left: 1em;
+}
+nav ol {
+ margin-left: 0;
+ padding-left: 0;
+ list-style: none;
+}
+nav > ol ol {
+ padding-left: 1em;
+}
+a {
+ text-decoration:inherit;
+ color: #0ae;
+}
+strong,b {
+ font-weitht: bold;
+ font-family: var(--family);
+}
+em {
+ font-style: normal;
+ text-emphasis: dot filled;
+ -webkit-text-emphasis: dot filled;
+}
+ruby rt {
+ font-weight: var(--weight);
+}
+dfn {
+ font-weight: bold;
+ font-style: normal;
+ font-family: var(--family);
+ white-space: nowrap;
+}
+table {
+ border-collapse: collapse;
+ margin: 1em;
+}
+table th,
+table td {
+ vertical-align: top;
+}
+table th {
+ text-align: inherit;
+}
+table.fig {
+ margin-left: 2em;
+}
+table.fig td:not(:first-child),
+table.fig th:not(:first-child){
+ padding-left: 1em;
+}
+tr.u td,
+tr.u th {
+ border-bottom: 1px solid #333;
+}
+nav#table-of-contents li.H3 {
+ font-size: 85%;
+ margin-left: 1em;
+}
+nav#header {
+ width: 100%;
+ height: 2em;
+}
+nav#header ul {
+ margin: 0 auto;
+ max-width: var(--width);
+ padding: 0;
+}
+nav#header li {
+ display: inline-block;
+ padding: 0;
+ line-height: 2.5em;
+}
+nav#header li:not(:first-child):before {
+ padding-left: .5em;
+ content: "» ";
+ color: #aaa;
+}
+footer {
+ margin: 4em 0;
+ text-align: center;
+}
+footer .copyright {
+ color: #999;
+}
+footer .copyright a[href]{
+ color: inherit;
+}
+ opacity: 0;
+}</style>
 <h1>metasta.github.io</h1>
-1987年広島生れ。
-<h2>Products</h2>
+<p>1987年広島生れ。</p>
+<h2>作品</h2>
 <ul>
-<li><a href="/asebi/"><ruby>馬酔木<rt>あせび</ruby>明朝</a> 旧字明朝体フォント
-<li><a href="https://github.com/metasta/nagame"><ruby>長雨<rt>ながめ</ruby></a> 縦書き Tumblr テーマ
+<li><a href="https://github.com/metasta/nagame"><ruby>長雨<rt>ながめ</ruby></a> (2013) 縦書き Tumblr テーマ
+<li><a href="/asebi/"><ruby>馬酔木<rt>あせび</ruby>明朝</a> (2014) 旧字明朝体フォント
+<li><a href="https://nishi-orche.com/29th/">第29回西日本医科学生オーケストラフェスティバル</a> (2017) Webサイト
 </ul>
-<h2>Sites</h2>
+
+
+<h2>筆記帳</h2>
 <ul>
-  <li><a href="https://github.com/metasta">GitHub</a>
-  <li><a href="https://gist.github.com/metasta">GitHubGist</a>
-  <li><a href="https://twitter.com/metasta">twitter</a>
+<li><a href="music-theory-notebook/">音楽理論ノート</a> (2018)
+</ul>
+
+<h2>居住地</h2>
+<ul>
+  <li><a href="https://github.com/metasta">GitHub</a> / <a href="https://gist.github.com/metasta">GitHubGist</a> (metasta)
+  <li><a href="https://twitter.com/metasta">Twitter</a> (@metasta)
   <li class="hidden"><a href="https://metasta.tumblr.com/">Tumblr</a>
   <li class="hidden"><a href="http://metasta.s602.xrea.com/">XREA</a>
   <li class="hidden"><a href="https://ss1.xrea.com/metasta.s602.xrea.com/">XREA SSL</a>
   <li class="hidden"><a href="http://metasta.web.fc2.com/">FC2</a>
 </ul>
+<footer><small class="copyright">&copy; 2014 <a href="https://twitter.com/metasta">metasta</a></small></footer>
