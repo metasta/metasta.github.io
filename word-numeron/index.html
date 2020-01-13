@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<title>英単語ヌメロン練習コーナー</title>
+<style>
+input, button, textarea {
+ appearance: none;
+}
+#input {
+ font-family: monospace;
+ font-size: 36pt;
+}
+#info {
+ font-family: monospace;
+ font-size: 20pt;
+}
+#next {
+ font-size: 16pt;
+}
+</style>
+<div>
+<input id="input" type="text" maxlength="4" size="4" required autofocus>
+<button id="ok" type="button">OK</button>
+</div>
+<div id="info">
+</textarea>
+<script src="dict-CEFR-J.js"></script>
+<script>
+function isvalid(flw){
+ return /^[a-z]{4}$/.test(flw) && /^(.)(?!\1)(.)(?!(?:\1|\2))(.)(?!(?:\1|\2|\3)).$/.test(flw);
+}
+
+function bitarray(flw){
+ const a = "a".charCodeAt();
+ var hitbit = flw.charCodeAt(0)<<24|flw.charCodeAt(1)<<16|flw.charCodeAt(2)<<8|flw.charCodeAt(3);
+ var blowbit = 1<<(flw.charCodeAt(0)-a)|1<<(flw.charCodeAt(1)-a)|1<<(flw.charCodeAt(2)-a)|1<<(flw.charCodeAt(3)-a);
+ return [hitbit, blowbit];
+}
+
+function bitcount(b){
+ var c = (b&0x55555555)+((b&0xAAAAAAAA)>>1);
+ c = (c&0x33333333)+((c&0xCCCCCCCC)>>2);
+ c = (c&0x0F0F0F0F)+((c&0xF0F0F0F0)>>4);
+ c = (c&0x00FF00FF)+((c&0xFF00FF00)>>8);
+ c = (c&0x0000FFFF)+((c&0xFFFF0000)>>16);
+ return c;
+}
+
+function hitandblow(b_flw, b_answer){
+ var x = b_flw[0]^b_answer[0];
+ var hit = ((x&0xff)?0:1) + (((x>>8)&0xff)?0:1) + (((x>>16)&0xff)?0:1) + (((x>>24)&0xff)?0:1);
+ var blow = bitcount(b_flw[1]&b_answer[1]) - hit;
+ return [hit, blow];
+}
+
+var answer = dict[Math.floor(Math.random() * dict.length)];
+var b_answer = bitarray(answer);
+var counter = 0;
+
+document.getElementById("ok").addEventListener("click",function(){
+ var flw = document.getElementById("input").value.toLowerCase();
+ if(isvalid(flw)){
+  var b_flw = bitarray(flw);
+  var [hit, blow] = hitandblow(b_flw, b_answer);
+  counter += 1;
+  document.getElementById("info").innerText += counter + " " + flw + " " + hit + "eat " + blow + "bite\n";
+  if (hit == 4) {
+   var next = document.createElement("button");
+   next.id = "next";
+   next.type = "button";
+   next.innerText = "next game";
+   next.addEventListener("click", function(){
+    answer = dict[Math.floor(Math.random() * dict.length)];
+    b_answer = bitarray(answer);
+    counter = 0;
+    document.getElementById("input").disabled = false;
+    document.getElementById("input").value = "";
+    document.getElementById("input").select();
+    document.getElementById("info").innerText = "";
+    next.parentNode.removeChild(next);
+   });
+   var info = document.getElementById("info");
+   info.parentNode.insertBefore(next, info.nextSibling);
+   document.getElementById("input").disabled = true;
+  } else {
+   document.getElementById("input").select();
+  }
+ }
+ else {
+  console.log("not valid");
+  document.getElementById("input").select();
+ }
+});
+
+</script>
