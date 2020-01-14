@@ -12,6 +12,7 @@ var field = [
 var attack_button = document.getElementById('attack');
 var board = document.getElementById('board');
 
+attack_button.addEventListener("click", attack);
 /*
  eat&bite calculator
  */
@@ -46,7 +47,13 @@ function eat_bite(word){
 function keyboard_operation(e,t,prev,next){
  switch(e.code){
   case "Enter":
-   check_and_attack();
+   var i = is_ready();
+   if( i != 0 ){
+    field[i-1].select();
+    e.preventDefault();
+    return;
+   }
+   attack();
    e.preventDefault();
    return;
   case "ArrowLeft":
@@ -105,15 +112,6 @@ function is_ready(){
  return 0;
 }
 
-function check_and_attack(){
- var i = is_ready();
- if( i != 0 ){
-  field[i-1].select();
-  return;
- }
- attack();
-}
-
 function get_word(){
  return [
   field[0].value,
@@ -138,6 +136,7 @@ function attack(){
  } else {
   field[0].select();
  }
+ return;
 }
 
 function create_next_button(){
