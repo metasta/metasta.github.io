@@ -1,93 +1,114 @@
 <!DOCTYPE html>
+<meta name="viewport" content="initial-scale=1.0">
+<meta name="robots" content="noindex">
 <title>英単語ヌメロン練習コーナー</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
 <style>
-input, button, textarea {
- appearance: none;
+:root {
+ --input-size: 48pt;
 }
-#input {
- font-family: monospace;
- font-size: 36pt;
+
+body {
+ margin: 0;
 }
-#info {
- font-family: monospace;
- font-size: 20pt;
+
+main {
+ max-width: 1280px;
+ margin: 0 auto;
 }
+
+form {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ padding: 20px 0;
+}
+
+input,button {
+ margin: 0; padding: 0;
+ display: inline-block;
+}
+button {
+ cursor: pointer;
+}
+
+.char {
+ margin: 0 -1px;
+ padding: 0;
+ border: 1px solid #ccc;
+ outline: none;
+ font-family: 'Roboto Mono',monospace;
+ font-size: var(--input-size);
+ text-align: center;
+ width: calc(var(--input-size) * 0.75);
+ height: calc(var(--input-size) * 1.25);
+}
+
+#attack {
+ margin: calc(var(--input-size) * 0.2);
+ margin-right: 0;
+ width: calc(var(--input-size) * 0.8);
+ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' style='width:48px;height:48px'%3E%3Ccircle cx='256' cy='256' r='256' fill='%23239afe'/%3E%3Cpath d='M384 259L262 375a29 29 0 11-40-42l49-48H154a29 29 0 110-58h117l-49-48a29 29 0 1140-42l122 116a5 5 0 010 6z' fill='white'/%3E%3C/svg%3E");
+ background-size: 95%;
+ background-repeat: no-repeat;
+ background-position: center;
+ border: none;
+}
+
+#attack::before {
+ content:'';
+ display: block;
+ padding-top: 100%;
+}
+
+#attack[disabled] {
+ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' style='width:48px;height:48px'%3E%3Ccircle cx='256' cy='256' r='256' fill='%23787878'/%3E%3Cpath d='M384 259L262 375a29 29 0 11-40-42l49-48H154a29 29 0 110-58h117l-49-48a29 29 0 1140-42l122 116a5 5 0 010 6z' fill='white'/%3E%3C/svg%3E");
+ cursor: inherit;
+}
+
+#board {
+ margin: 20px auto;
+ font-family: 'Roboto Mono',monospace;
+ font-size: 11pt;
+ text-align: center;
+ color: #444;
+}
+
 #next {
+ display: block;
+ margin: 0 auto;
+ padding: 15px 15px 20px 15px;
  font-size: 16pt;
+ border: none;
+ border-radius: 30px;
+ background: #239afe;
+ color: #fff;
+ outline: none;
 }
 </style>
-<div>
-<input id="input" type="text" maxlength="4" size="4" required autofocus>
-<button id="ok" type="button">OK</button>
+<main>
+<form>
+<input id="in0" class="char" type="text" required autofocus
+ maxlength="1" size="1" pattern="^[A-Za-z]$"
+ onfocus="this.select()" oninput="input(this,'in1')"
+ onkeydown="keyboard_operation(arguments[0],this,'in3','in1')">
+<input id="in1" class="char" type="text" required
+ maxlength="1" size="1" pattern="^[A-Za-z]$"
+ onfocus="this.select()" oninput="input(this,'in2')"
+ onkeydown="keyboard_operation(arguments[0],this,'in0','in2')">
+<input id="in2" class="char" type="text" required
+ maxlength="1" size="1" pattern="^[A-Za-z]$"
+ onfocus="this.select()" oninput="input(this,'in3')"
+ onkeydown="keyboard_operation(arguments[0],this,'in1','in3')">
+<input id="in3" class="char" type="text" required
+ maxlength="1" size="1" pattern="^[A-Za-z]$"
+ onfocus="this.select()" oninput="input(this,'in0')"
+ onkeydown="keyboard_operation(arguments[0],this,'in2','in0')">
+<button id="attack" type="button" onclick="attack()" disabled></button>
+</form>
+<div id="board">
 </div>
-<div id="info">
-</textarea>
+</main>
+
 <script src="dict-CEFR-J.js"></script>
-<script>
-function isvalid(flw){
- return /^[a-z]{4}$/.test(flw) && /^(.)(?!\1)(.)(?!(?:\1|\2))(.)(?!(?:\1|\2|\3)).$/.test(flw);
-}
-
-function bitarray(flw){
- const a = "a".charCodeAt();
- var hitbit = flw.charCodeAt(0)<<24|flw.charCodeAt(1)<<16|flw.charCodeAt(2)<<8|flw.charCodeAt(3);
- var blowbit = 1<<(flw.charCodeAt(0)-a)|1<<(flw.charCodeAt(1)-a)|1<<(flw.charCodeAt(2)-a)|1<<(flw.charCodeAt(3)-a);
- return [hitbit, blowbit];
-}
-
-function bitcount(b){
- var c = (b&0x55555555)+((b&0xAAAAAAAA)>>1);
- c = (c&0x33333333)+((c&0xCCCCCCCC)>>2);
- c = (c&0x0F0F0F0F)+((c&0xF0F0F0F0)>>4);
- c = (c&0x00FF00FF)+((c&0xFF00FF00)>>8);
- c = (c&0x0000FFFF)+((c&0xFFFF0000)>>16);
- return c;
-}
-
-function hitandblow(b_flw, b_answer){
- var x = b_flw[0]^b_answer[0];
- var hit = ((x&0xff)?0:1) + (((x>>8)&0xff)?0:1) + (((x>>16)&0xff)?0:1) + (((x>>24)&0xff)?0:1);
- var blow = bitcount(b_flw[1]&b_answer[1]) - hit;
- return [hit, blow];
-}
-
-var answer = dict[Math.floor(Math.random() * dict.length)];
-var b_answer = bitarray(answer);
-var counter = 0;
-
-document.getElementById("ok").addEventListener("click",function(){
- var flw = document.getElementById("input").value.toLowerCase();
- if(isvalid(flw)){
-  var b_flw = bitarray(flw);
-  var [hit, blow] = hitandblow(b_flw, b_answer);
-  counter += 1;
-  document.getElementById("info").innerText += counter + " " + flw + " " + hit + "eat " + blow + "bite\n";
-  if (hit == 4) {
-   var next = document.createElement("button");
-   next.id = "next";
-   next.type = "button";
-   next.innerText = "next game";
-   next.addEventListener("click", function(){
-    answer = dict[Math.floor(Math.random() * dict.length)];
-    b_answer = bitarray(answer);
-    counter = 0;
-    document.getElementById("input").disabled = false;
-    document.getElementById("input").value = "";
-    document.getElementById("input").select();
-    document.getElementById("info").innerText = "";
-    next.parentNode.removeChild(next);
-   });
-   var info = document.getElementById("info");
-   info.parentNode.insertBefore(next, info.nextSibling);
-   document.getElementById("input").disabled = true;
-  } else {
-   document.getElementById("input").select();
-  }
- }
- else {
-  console.log("not valid");
-  document.getElementById("input").select();
- }
-});
-
-</script>
+<script src="word-numeron.js"></script>
