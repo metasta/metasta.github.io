@@ -77,7 +77,7 @@ function keyboard_operation(e,t,prev,next){
 
 function input(t,next){
  if(t.value.length == 1){
-  document.getElementById(next).select();
+  document.getElementById(next).focus();
  }
  if(is_ready() == 0){
   attack_button.disabled = false;
