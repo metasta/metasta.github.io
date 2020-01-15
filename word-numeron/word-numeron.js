@@ -76,7 +76,6 @@ function keydown(e,t,prev,next){
 }
 
 function input(t,next){
- console.log("input");
  if(t.value.length >= 1){
   t.value = t.value.slice(-1);
   document.getElementById(next).focus();
@@ -87,6 +86,11 @@ function input(t,next){
  else{
   attack_button.disabled = true;
  }
+}
+
+function select(t){
+ var l = t.value.length;
+ t.setSelectionRange(l, l);
 }
 
 /*
