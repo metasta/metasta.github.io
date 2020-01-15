@@ -44,12 +44,12 @@ function eat_bite(word){
 /*
  input behavior
  */
-function keyboard_operation(e,t,prev,next){
+function keydown(e,t,prev,next){
  switch(e.code){
   case "Enter":
    var i = is_ready();
    if( i != 0 ){
-    field[i-1].select();
+    field[i-1].focus();
     e.preventDefault();
     return;
    }
@@ -57,26 +57,28 @@ function keyboard_operation(e,t,prev,next){
    e.preventDefault();
    return;
   case "ArrowLeft":
-   document.getElementById(prev).select();
+   document.getElementById(prev).focus();
    e.preventDefault();
    return;
   case "ArrowRight":
-   document.getElementById(next).select();
+   document.getElementById(next).focus();
    e.preventDefault();
    return;
   case "Backspace":
    if(t.value == ""){
-    document.getElementById(prev).select();
+    document.getElementById(prev).focus();
     e.preventDefault();
    }
    return;
   default:
-   return;
+  return;
  }
 }
 
 function input(t,next){
- if(t.value.length == 1){
+ console.log("input");
+ if(t.value.length >= 1){
+  t.value = t.value.slice(-1);
   document.getElementById(next).focus();
  }
  if(is_ready() == 0){
@@ -125,7 +127,7 @@ function attack(){
  attack_counter += 1;
  var word = get_word();
  var [eat, bite] = eat_bite(word);
- board.innerText += attack_counter + ':"' + word + '" ' + eat + 'eat ' + bite + 'bite\n';
+ board.innerText = attack_counter + ':"' + word + '" ' + eat + 'eat ' + bite + 'bite\n' + board.innerText;
  if (eat == 4) {
   window.getSelection().removeAllRanges();
   attack_button.disabled = true;
@@ -134,7 +136,7 @@ function attack(){
   }
   create_next_button();
  } else {
-  field[0].select();
+  field[0].focus();
  }
  return;
 }
@@ -164,7 +166,7 @@ function start_new_game(){
  }
  board.innerText = "";
  remove_next_button();
- field[0].select();
+ field[0].focus();
 }
 
 start_new_game();

@@ -24,10 +24,12 @@ form {
  padding: 20px 0;
 }
 
-input,button {
+input[type],button {
  margin: 0; padding: 0;
  display: inline-block;
  appearance: none;
+ user-select: none;
+ caret-color: transparent;
 }
 button {
  cursor: pointer;
@@ -43,6 +45,9 @@ button {
  text-align: center;
  width: calc(var(--input-size) * 0.75);
  height: calc(var(--input-size) * 1.25);
+}
+.char:focus{
+ background-color: rgba(35, 154, 254,.3);
 }
 
 #attack {
@@ -77,7 +82,7 @@ button {
 
 #next {
  display: block;
- margin: 0 auto;
+ margin: 20px auto;
  padding: 15px 20px 20px 20px;
  font-size: 16pt;
  border: none;
@@ -90,21 +95,21 @@ button {
 <main>
 <form>
 <input id="in0" class="char" type="text" required autofocus
- maxlength="1" size="1" pattern="^[A-Za-z]$"
- onfocus="this.select()" oninput="input(this,'in1')"
- onkeydown="keyboard_operation(arguments[0],this,'in3','in1')">
+ maxlength="2" size="1" pattern="^[A-Za-z]$"
+ oninput="input(this,'in1')"
+ onkeydown="keydown(arguments[0],this,'in3','in1')">
 <input id="in1" class="char" type="text" required
- maxlength="1" size="1" pattern="^[A-Za-z]$"
- onfocus="this.select()" oninput="input(this,'in2')"
- onkeydown="keyboard_operation(arguments[0],this,'in0','in2')">
+ maxlength="2" size="1" pattern="^[A-Za-z]$"
+ oninput="input(this,'in2')"
+ onkeydown="keydown(arguments[0],this,'in0','in2')">
 <input id="in2" class="char" type="text" required
- maxlength="1" size="1" pattern="^[A-Za-z]$"
- onfocus="this.select()" oninput="input(this,'in3')"
- onkeydown="keyboard_operation(arguments[0],this,'in1','in3')">
+ maxlength="2" size="1" pattern="^[A-Za-z]$"
+ oninput="input(this,'in3')"
+ onkeydown="keydown(arguments[0],this,'in1','in3')">
 <input id="in3" class="char" type="text" required
- maxlength="1" size="1" pattern="^[A-Za-z]$"
- onfocus="this.select()" oninput="input(this,'in0')"
- onkeydown="keyboard_operation(arguments[0],this,'in2','in0')">
+ maxlength="2" size="1" pattern="^[A-Za-z]$"
+ oninput="input(this,'in0')"
+ onkeydown="keydown(arguments[0],this,'in2','in0')">
 <button disabled id="attack" type="button"></button>
 </form>
 <div id="board">
