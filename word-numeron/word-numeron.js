@@ -65,10 +65,9 @@ function keydown(e,t,prev,next){
    e.preventDefault();
    return;
   case "Backspace":
-   if(t.value == ""){
-    document.getElementById(prev).focus();
-    e.preventDefault();
-   }
+   t.value = "";
+   document.getElementById(prev).focus();
+   e.preventDefault();
    return;
   default:
   return;
