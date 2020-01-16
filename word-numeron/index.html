@@ -30,6 +30,7 @@ input[type="text"],button {
  appearance: none;
  user-select: none;
  caret-color: transparent;
+ border-radius: 0;
 }
 button {
  cursor: pointer;
@@ -97,22 +98,22 @@ button {
 <form>
 <input id="in0" class="char" type="text" required autofocus
  maxlength="2" size="1" pattern="^[A-Za-z]$"
- onselect="select(this)"
+ onselect="select(this)" onfocus="select(this)"
  oninput="input(this,'in1')"
  onkeydown="keydown(arguments[0],this,'in3','in1')">
 <input id="in1" class="char" type="text" required
  maxlength="2" size="1" pattern="^[A-Za-z]$"
- onselect="select(this)"
+ onselect="select(this)" onfocus="select(this)"
  oninput="input(this,'in2')"
  onkeydown="keydown(arguments[0],this,'in0','in2')">
 <input id="in2" class="char" type="text" required
  maxlength="2" size="1" pattern="^[A-Za-z]$"
- onselect="select(this)"
+ onselect="select(this)" onfocus="select(this)"
  oninput="input(this,'in3')"
  onkeydown="keydown(arguments[0],this,'in1','in3')">
 <input id="in3" class="char" type="text" required
  maxlength="2" size="1" pattern="^[A-Za-z]$"
- onselect="select(this)"
+ onselect="select(this)" onfocus="select(this)"
  oninput="input(this,'in0')"
  onkeydown="keydown(arguments[0],this,'in2','in0')">
 <button disabled id="attack" type="button"></button>
@@ -122,4 +123,4 @@ button {
 </main>
 
 <script src="dict-CEFR-J.js"></script>
-<script src="word-numeron.js?desk"></script>
+<script src="word-numeron.js?park"></script>
