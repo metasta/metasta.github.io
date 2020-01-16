@@ -9,10 +9,17 @@ var field = [
  document.getElementById('in2'),
  document.getElementById('in3')
 ];
+for(var i = 0; i < 4; i++){
+ field[i].addEventListener("focus", function(e){
+  select(this);
+ });
+}
+
 var attack_button = document.getElementById('attack');
 var board = document.getElementById('board');
 
 attack_button.addEventListener("click", attack);
+
 /*
  eat&bite calculator
  */
@@ -133,7 +140,7 @@ function attack(){
  board.innerText = attack_counter + ':"' + word + '" ' + eat + 'eat ' + bite + 'bite\n' + board.innerText;
  if (eat == 4) {
   window.getSelection().removeAllRanges();
-  attack_button.disabled = true;
+  attack_button.style.display = "none";
   for(var i = 0; i < 4; i++){
    field[i].disabled = true;
   }
@@ -163,6 +170,7 @@ function remove_next_button(){
 function start_new_game(){
  packed_answer = pack(dict[Math.floor(Math.random() * dict.length)]);
  attack_counter = 0;
+ attack_button.style.display = "inherit";
  for(var i = 0; i < 4; i++){
   field[i].value = "";
   field[i].disabled = false;
