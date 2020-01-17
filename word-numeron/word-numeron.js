@@ -9,11 +9,6 @@ var field = [
  document.getElementById('in2'),
  document.getElementById('in3')
 ];
-for(var i = 0; i < 4; i++){
- field[i].addEventListener("focus", function(e){
-  select(this);
- });
-}
 
 var attack_button = document.getElementById('attack');
 var board = document.getElementById('board');
@@ -51,52 +46,54 @@ function eat_bite(word){
 /*
  input behavior
  */
-function keydown(e,t,prev,next){
+
+function keydown(e, next, prev){
  switch(e.code){
   case "Enter":
    var i = is_ready();
    if( i != 0 ){
     field[i-1].focus();
-    e.preventDefault();
-    return;
+    break;
    }
    attack();
-   e.preventDefault();
-   return;
+   break;
   case "ArrowLeft":
    document.getElementById(prev).focus();
-   e.preventDefault();
-   return;
+   break;
   case "ArrowRight":
    document.getElementById(next).focus();
-   e.preventDefault();
-   return;
+   break;
   case "Backspace":
-   t.value = "";
+   e.target.value = "";
    document.getElementById(prev).focus();
-   e.preventDefault();
-   return;
+   break;
+  case "Tab":
+   if(e.shiftKey){
+    document.getElementById(prev).focus();
+   } else {
+    document.getElementById(next).focus();
+   }
+   break;
   default:
-  return;
+   if(/^[A-Za-z]$/.test(e.key)){
+    e.target.value = e.key;
+    document.getElementById(next).focus();
+    if(is_ready() == 0){
+     attack_button.disabled = false;
+    }
+    else {
+     attack_button.disabled = true;
+    }
+    break;
+   }
+   return;
  }
+ e.preventDefault();
+ return;
 }
 
-function input(t,next){
- if(t.value.length >= 1){
-  t.value = t.value.slice(-1);
-  document.getElementById(next).focus();
- }
- if(is_ready() == 0){
-  attack_button.disabled = false;
- }
- else{
-  attack_button.disabled = true;
- }
-}
-
-function select(t){
- var l = t.value.length;
- t.setSelectionRange(l, l);
+function focus_to(id){
+ document.getElementById(id).focus();
 }
 
 /*

@@ -31,7 +31,6 @@ input[type="text"],button {
  user-select: none;
  caret-color: transparent;
  border-radius: 0;
- box-shadow: none;
 }
 button {
  cursor: pointer;
@@ -55,15 +54,22 @@ input[type="text"].char:focus {
 }
 input[type="text"].char:disabled {
  border-color: transparent;
- color: black;
+ color: black !important;
  margin: 0 calc(var(--input-size) * -0.08);
+}
+
+input[type="text"].dummy {
+ font-size: 1px;
+ visibility: hidden;
+ width: 1px;
+ height: 1px;
 }
 
 #attack {
  margin: calc(var(--input-size) * 0.2);
  margin-right: 0;
  width: calc(var(--input-size) * 0.8);
- background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' style='width:48px;height:48px'%3E%3Ccircle cx='256' cy='256' r='256' fill='%23239afe'/%3E%3Cpath d='M384 259L262 375a29 29 0 11-40-42l49-48H154a29 29 0 110-58h117l-49-48a29 29 0 1140-42l122 116a5 5 0 010 6z' fill='white'/%3E%3C/svg%3E");
+ background: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' style='width:48px;height:48px'%3E%3Ccircle cx='256' cy='256' r='256' fill='%23239afe'/%3E%3Cpath d='M384 259L262 375a29 29 0 11-40-42l49-48H154a29 29 0 110-58h117l-49-48a29 29 0 1140-42l122 116a5 5 0 010 6z' fill='white'/%3E%3C/svg%3E");
  background-size: 95%;
  background-repeat: no-repeat;
  background-position: center;
@@ -77,7 +83,7 @@ input[type="text"].char:disabled {
 }
 
 #attack[disabled] {
- background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' style='width:48px;height:48px'%3E%3Ccircle cx='256' cy='256' r='256' fill='%23787878'/%3E%3Cpath d='M384 259L262 375a29 29 0 11-40-42l49-48H154a29 29 0 110-58h117l-49-48a29 29 0 1140-42l122 116a5 5 0 010 6z' fill='white'/%3E%3C/svg%3E");
+ background: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' style='width:48px;height:48px'%3E%3Ccircle cx='256' cy='256' r='256' fill='%23787878'/%3E%3Cpath d='M384 259L262 375a29 29 0 11-40-42l49-48H154a29 29 0 110-58h117l-49-48a29 29 0 1140-42l122 116a5 5 0 010 6z' fill='white'/%3E%3C/svg%3E");
  cursor: inherit;
 }
 
@@ -103,30 +109,19 @@ input[type="text"].char:disabled {
 </style>
 <main>
 <form>
-<input id="in0" class="char" type="text" required autofocus
- maxlength="2" size="1" pattern="^[A-Za-z]$"
- onselect="select(this)"
- oninput="input(this,'in1')"
- onkeydown="keydown(arguments[0],this,'in3','in1')">
-<input id="in1" class="char" type="text" required
- maxlength="2" size="1" pattern="^[A-Za-z]$"
- onselect="select(this)"
- oninput="input(this,'in2')"
- onkeydown="keydown(arguments[0],this,'in0','in2')">
-<input id="in2" class="char" type="text" required
- maxlength="2" size="1" pattern="^[A-Za-z]$"
- onselect="select(this)"
- oninput="input(this,'in3')"
- onkeydown="keydown(arguments[0],this,'in1','in3')">
-<input id="in3" class="char" type="text" required
- maxlength="2" size="1" pattern="^[A-Za-z]$"
- onselect="select(this)"
- oninput="input(this,'in0')"
- onkeydown="keydown(arguments[0],this,'in2','in0')">
+<input type="text" class="dummy" onfocus="focus_to('in3')">
+<input id="in0" class="char" type="text" autofocus
+ onkeydown="keydown(arguments[0],'in1','in3')">
+<input id="in1" class="char" type="text"
+ onkeydown="keydown(arguments[0],'in2','in0')">
+<input id="in2" class="char" type="text"
+ onkeydown="keydown(arguments[0],'in3','in1')">
+<input id="in3" class="char" type="text"
+ onkeydown="keydown(arguments[0],'in0','in2')">
 <button disabled id="attack" type="button"></button>
+<input type="text" class="dummy" onfocus="focus_to('in0')">
 </form>
-<div id="board">
-</div>
+<div id="board"></div>
 </main>
 
 <script src="dict-CEFR-J.js"></script>
