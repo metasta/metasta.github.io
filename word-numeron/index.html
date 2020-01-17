@@ -54,7 +54,9 @@ input[type="text"].char:focus {
 }
 input[type="text"].char:disabled {
  border-color: transparent;
- color: black !important;
+ color: black;
+ -webkit-text-fill-color: black;
+ opacity: 1;
  margin: 0 calc(var(--input-size) * -0.08);
 }
 
