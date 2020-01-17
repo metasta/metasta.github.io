@@ -139,6 +139,7 @@ function attack(){
   window.getSelection().removeAllRanges();
   attack_button.style.display = "none";
   for(var i = 0; i < 4; i++){
+   field[i].blur();
    field[i].disabled = true;
   }
   create_next_button();
