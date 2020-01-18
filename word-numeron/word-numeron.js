@@ -3,17 +3,35 @@
  */
 var packed_answer = [0,0];
 var attack_counter = 0;
-var field = [
- document.getElementById('in0'),
- document.getElementById('in1'),
- document.getElementById('in2'),
- document.getElementById('in3')
-];
+var attack_button = undefined;
+var board = undefined;
+var next_button = undefined;
+var field = [];
 
-var attack_button = document.getElementById('attack');
-var board = document.getElementById('board');
-
-attack_button.addEventListener("click", attack);
+function init(){
+ attack_button = document.getElementById('attack');
+ attack_button.addEventListener("click", attack);
+ board = document.getElementById('board');
+ next_button = document.getElementById('next');
+ next_button.addEventListener("click", start_new_game);
+ field = [
+  document.getElementById('in0'),
+  document.getElementById('in1'),
+  document.getElementById('in2'),
+  document.getElementById('in3')];
+ field[0].addEventListener("keydown",function(e){
+  keydown(e, field[1], field[3]);
+ });
+ field[1].addEventListener("keydown",function(e){
+  keydown(e, field[2], field[0]);
+ });
+ field[2].addEventListener("keydown",function(e){
+  keydown(e, field[3], field[1]);
+ });
+ field[3].addEventListener("keydown",function(e){
+  keydown(e, field[0], field[2]);
+ });
+}
 
 /*
  eat&bite calculator
@@ -46,9 +64,25 @@ function eat_bite(word){
 /*
  input behavior
  */
-
 function keydown(e, next, prev){
  switch(e.code){
+  case "Tab":
+   if(e.shiftKey){
+    prev.focus();
+   } else {
+    next.focus();
+   }
+   break;
+  case "ArrowLeft":
+   prev.focus();
+   break;
+  case "ArrowRight":
+   next.focus();
+   break;
+  case "Backspace":
+   e.target.value = "";
+   prev.focus();
+   break;
   case "Enter":
    var i = is_ready();
    if( i != 0 ){
@@ -57,36 +91,18 @@ function keydown(e, next, prev){
    }
    attack();
    break;
-  case "ArrowLeft":
-   document.getElementById(prev).focus();
-   break;
-  case "ArrowRight":
-   document.getElementById(next).focus();
-   break;
-  case "Backspace":
-   e.target.value = "";
-   document.getElementById(prev).focus();
-   break;
-  case "Tab":
-   if(e.shiftKey){
-    document.getElementById(prev).focus();
-   } else {
-    document.getElementById(next).focus();
-   }
-   break;
   default:
-   if(/^[A-Za-z]$/.test(e.key)){
+   if( /^[A-Za-z]$/.test(e.key) ){
     e.target.value = e.key;
-    document.getElementById(next).focus();
-    if(is_ready() == 0){
-     attack_button.disabled = false;
-    }
-    else {
-     attack_button.disabled = true;
-    }
+    next.focus();
     break;
    }
    return;
+ }
+ if(is_ready() == 0){
+  attack_button.disabled = false;
+ } else {
+  attack_button.disabled = true;
  }
  e.preventDefault();
  return;
@@ -100,8 +116,6 @@ function focus_to(id){
  game procedure
  */
 function is_ready(){
- /*  0 : ready
-   >0 : not ready */
  var char = [
   field[0].value,
   field[1].value,
@@ -109,30 +123,25 @@ function is_ready(){
   field[3].value
  ];
  for(var i = 0; i < 4; i++){
-  if(! /^[A-Za-z]$/.test(char[i])){
-   return i+1;
+  if(! /^[A-Za-z]$/.test(char[i]) ){
+   return i+1; /* field[i] is not ready */
   }
   for(var j = 0; j < i; j++){
-   if(char[j] == char[i]){
-    return i+1;
+   if( char[j] == char[i] ){
+    return i+1; /* field[i] is not ready */
    }
   }
  }
- return 0;
-}
-
-function get_word(){
- return [
-  field[0].value,
-  field[1].value,
-  field[2].value,
-  field[3].value
- ].join("").toLowerCase();
+ return 0; /* ready */
 }
 
 function attack(){
  attack_counter += 1;
- var word = get_word();
+ var word = [
+  field[0].value,
+  field[1].value,
+  field[2].value,
+  field[3].value ].join("").toLowerCase();
  var [eat, bite] = eat_bite(word);
  board.innerText = attack_counter + ':"' + word + '" ' + eat + 'eat ' + bite + 'bite\n' + board.innerText;
  if (eat == 4) {
@@ -142,40 +151,28 @@ function attack(){
    field[i].blur();
    field[i].disabled = true;
   }
-  create_next_button();
+  next_button.style.display = "block";
  } else {
   field[0].focus();
  }
  return;
 }
 
-function create_next_button(){
- var next = document.createElement("button");
- next.id = "next";
- next.type = "button";
- next.innerText = "next game";
- next.addEventListener("click", start_new_game);
- board.parentNode.insertBefore(next, board.nextSibling);
-}
-
-function remove_next_button(){
- var next_button = document.getElementById("next");
- if(next_button != null){
-  next_button.parentNode.removeChild(next_button);
- }
-}
-
 function start_new_game(){
  packed_answer = pack(dict[Math.floor(Math.random() * dict.length)]);
  attack_counter = 0;
+ attack_button.disabled = true;
  attack_button.style.display = "inherit";
  for(var i = 0; i < 4; i++){
   field[i].value = "";
   field[i].disabled = false;
  }
  board.innerText = "";
- remove_next_button();
+ next_button.style.display = "none";
  field[0].focus();
 }
 
-start_new_game();
+window.onload = function(){
+ init();
+ start_new_game();
+}
