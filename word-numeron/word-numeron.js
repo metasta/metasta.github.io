@@ -92,7 +92,7 @@ function keydown(e, next, prev){
    attack();
    break;
   default:
-   if( /^[A-Za-z]$/.test(e.key) ){
+   if( /^.$/.test(e.key) ){
     e.target.value = e.key;
     next.focus();
     break;
