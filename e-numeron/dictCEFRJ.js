@@ -1,4 +1,4 @@
-const dict = [
+const dictCEFRJ = [
 "able",
 "ache",
 "acid",
@@ -666,4 +666,4 @@ const dict = [
 "yoga",
 "your",
 "zone"
-];
+]

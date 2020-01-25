@@ -36,28 +36,18 @@ function init(){
 /*
  eat&bite calculator
  */
-function bitcounter(b){
- var c = (b&0x55555555)+((b&0xAAAAAAAA)>>1);
- c = (c&0x33333333)+((c&0xCCCCCCCC)>>2);
- c = (c&0x0F0F0F0F)+((c&0xF0F0F0F0)>>4);
- c = (c&0x00FF00FF)+((c&0xFF00FF00)>>8);
- c = (c&0x0000FFFF)+((c&0xFFFF0000)>>16);
- return c;
-}
-
 function pack(word){
  const a = "a".charCodeAt();
- var b_eat = word.charCodeAt(0)<<24|word.charCodeAt(1)<<16|word.charCodeAt(2)<<8|word.charCodeAt(3);
- var b_bite = 1<<(word.charCodeAt(0)-a)|1<<(word.charCodeAt(1)-a)|1<<(word.charCodeAt(2)-a)|1<<(word.charCodeAt(3)-a);
- return [b_eat, b_bite];
+ var w = word.split("").map(c => c.charCodeAt() - a);
+ var eat = w[0]<<24 | w[1]<<16 | w[2]<<8  | w[3];
+ var bite = 1<<w[0] | 1<<w[1] | 1<<w[2] | 1<<w[3];
+ return [eat, bite];
 }
 
 function eat_bite(word){
- var a = pack(word);
- var p = packed_answer;
- var x = a[0]^p[0];
- var eat = ((x&0xff)?0:1) + (((x>>8)&0xff)?0:1) + (((x>>16)&0xff)?0:1) + (((x>>24)&0xff)?0:1);
- var bite = bitcounter(a[1]&p[1]) - eat;
+ var val = eNumeron.eatbite(eNumeron.pack(word), packed_answer);
+ var eat = val>>4;
+ var bite = val&0xF;
  return [eat, bite];
 }
 
@@ -124,15 +114,15 @@ function is_ready(){
  ];
  for(var i = 0; i < 4; i++){
   if(! /^[A-Za-z]$/.test(char[i]) ){
-   return i+1; /* field[i] is not ready */
+   return i+1;
   }
   for(var j = 0; j < i; j++){
    if( char[j] == char[i] ){
-    return i+1; /* field[i] is not ready */
+    return i+1;
    }
   }
  }
- return 0; /* ready */
+ return 0;
 }
 
 function attack(){
@@ -159,7 +149,7 @@ function attack(){
 }
 
 function start_new_game(){
- packed_answer = pack(dict[Math.floor(Math.random() * dict.length)]);
+ packed_answer = pack(dictCEFRJ[Math.floor(Math.random() * dictCEFRJ.length)]);
  attack_counter = 0;
  attack_button.disabled = true;
  attack_button.style.display = "inherit";

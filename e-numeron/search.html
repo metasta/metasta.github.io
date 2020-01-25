@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<meta name="viewport" content="initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>英単語ヌメロン検索</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+ --input-size: 48pt;
+}
+
+body {
+ margin: 0;
+}
+
+main {
+ max-width: 1280px;
+ margin: 0 auto;
+}
+
+body {
+ background: #333;
+ color: #fff;
+}
+table#query {
+ margin: 0 auto;
+ font-family: 'Roboto Mono',monospace;
+ text-align: center;
+ border: none;
+}
+table#query th {
+ font-size: 10pt;
+ font-weight: inherit;
+ padding: 0;
+}
+table#query td {
+ padding: 3px;
+}
+table#query input[type="text"] {
+ -webkit-appearance: none;
+ appearance: none;
+ border: 1px solid #ddd;
+ background: transparent;
+ color: inherit;
+ font-family: inherit;
+ font-size: 16pt;
+ line-height: 1;
+ text-align: center;
+}
+table#query button {
+ -webkit-appearance: none;
+ appearance: none;
+ border: 1px solid #ddd;
+ border-radius: 100%;
+ width: 27px;
+ height: 27px;
+ background: transparent;
+ color: inherit;
+ font-family: inherit;
+ font-size: 16pt;
+ line-height: 0;
+ text-align: center;
+ cursor: pointer;
+}
+table#query button:disabled {
+ color: transparent;
+ border: transparent;
+ cursor: inherit;
+}
+#console1, #console2 {
+ max-width: 700px;
+ min-height: 50px;
+ margin: 20px auto;
+ padding: 10px;
+ background: #000;
+ border-radius: 3px;
+ font-family: 'Roboto Mono',monospace;
+ font-size: 11pt;
+}
+p.list {
+ margin: 0; padding: 0;
+ color: #ffa341;
+}
+#stat1, #stat2 {
+ display: flex;
+ flex-flow: row wrap;
+ justify-content: space-between;
+}
+#stat1 table:last-child:nth-child(odd),
+#stat2 table:last-child:nth-child(odd) {
+ flex-grow: 1;
+}
+table.stat {
+ border-collapse: collapse;
+ margin: 10px 0;
+ font-size: 10pt;
+}
+table.stat tr:first-child {
+ color: #888;
+}
+table.stat td {
+ padding: 0 .15em;
+ line-height: 1.1;
+ text-align: right;
+}
+</style>
+<main>
+<table id="query">
+<thead>
+ <tr>
+  <th>word
+  <th>eat
+  <th>bite
+  <th>
+  <th>
+</thead>
+<tbody>
+ <tr>
+  <td><input type="text" size="4">
+  <td><input type="text" size="1">
+  <td><input type="text" size="1">
+  <td><button type="button" onclick="increaseQuery(this)">+</button>
+  <td><button type="button" onclick="decreaseQuery(this)" disabled>-</button>
+</tbody>
+</table>
+
+<div id="console1"></div>
+<div id="console2"></div>
+</main>
+
+<script src="dictCEFRJ.js"></script>
+<script src="dictAll.js"></script>
+<script src="eNumeron.js"></script>
+<script src="search.js"></script>
