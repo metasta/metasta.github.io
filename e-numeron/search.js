@@ -7,12 +7,12 @@ function increaseQuery(t){
  tr.appendChild(td1);
  var td2 = document.createElement('td');
  var in2 = document.createElement('input');
- in2.type = "text"; in2.size = "1";
+ in2.type = "number"; in2.min = "0"; in2.max = "4";
  td2.appendChild(in2);
  tr.appendChild(td2);
  var td3 = document.createElement('td');
  var in3 = document.createElement('input');
- in3.type = "text"; in3.size = "1";
+ in3.type = "number"; in3.min = "0"; in3.max = "4";
  td3.appendChild(in3);
  tr.appendChild(td3);
  var td4 = document.createElement('td');
@@ -56,16 +56,6 @@ function queries(){
  for (var i = 0; i < inputs.length; i += 3){
   var word = inputs[i].value;
   if(eNumeron.valid(word) !== true){ error.push(i); }
-/*  if(! /^[A-Za-z]{4}/.test(word) ){
-   error.push(i);
-  } else {
-   for(var j = 0; j < 4; j++){
-    for(var k = 0; k < j; k++){
-     if( word[k] == word[j] ){ error.push(i); j = 4; break; }
-    }
-   }
-  }
-*/
   var eat = inputs[i+1].value;
   if(! /^[0-4]$/.test(eat) ){ error.push(i+1); }
   var bite = inputs[i+2].value;
@@ -122,10 +112,15 @@ function formatTable(d, a){
   td1.innerText = a[i]; tr.appendChild(td1);
   for(var j = 0; j < 4; j++){
    var td = document.createElement('td');
-   td.innerText = d[j][a[i]]; tr.appendChild(td);
+   var val = d[j][a[i]];
+   td.innerText = val;
+   if (val == 0){ td.className = "zero"; }
+   tr.appendChild(td);
   }
   var sum = document.createElement('td');
-  sum.innerText = d[0][a[i]] + d[1][a[i]] + d[2][a[i]] + d[3][a[i]];
+  var sumval = d[0][a[i]] + d[1][a[i]] + d[2][a[i]] + d[3][a[i]];
+  sum.innerText = sumval;
+  if (sumval == 0){ sum.className = "zero"; td1.className = "zero"; }
   tr.appendChild(sum);
   table.appendChild(tr);
  }
