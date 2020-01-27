@@ -94,22 +94,28 @@ function formatTable(d, a){
  var table = document.createElement('table');
  table.className = "stat";
  var header = document.createElement('tr');
- var th1 = document.createElement('td'); header.appendChild(th1);
+ var th1 = document.createElement('td');
+ header.appendChild(th1);
  var th2 = document.createElement('td');
- th2.innerText = "1st"; header.appendChild(th2);
+ header.appendChild(th2);
  var th3 = document.createElement('td');
- th3.innerText = "2nd"; header.appendChild(th3);
+ th3.innerText = "1st"; header.appendChild(th3);
  var th4 = document.createElement('td');
- th4.innerText = "3rd"; header.appendChild(th4);
+ th4.innerText = "2nd"; header.appendChild(th4);
  var th5 = document.createElement('td');
- th5.innerText = "4th"; header.appendChild(th5);
+ th5.innerText = "3rd"; header.appendChild(th5);
  var th6 = document.createElement('td');
- th6.innerText = "sum"; header.appendChild(th6);
+ th6.innerText = "4th"; header.appendChild(th6);
  table.appendChild(header);
  for(var i = 0; i < a.length; i++){
   var tr = document.createElement('tr');
   var td1 = document.createElement('td');
   td1.innerText = a[i]; tr.appendChild(td1);
+  var sum = document.createElement('td');
+  var sumval = d[0][a[i]] + d[1][a[i]] + d[2][a[i]] + d[3][a[i]];
+  sum.innerText = sumval;
+  if (sumval == 0){ sum.className = "zero"; td1.className = "zero"; }
+  tr.appendChild(sum);
   for(var j = 0; j < 4; j++){
    var td = document.createElement('td');
    var val = d[j][a[i]];
@@ -117,11 +123,6 @@ function formatTable(d, a){
    if (val == 0){ td.className = "zero"; }
    tr.appendChild(td);
   }
-  var sum = document.createElement('td');
-  var sumval = d[0][a[i]] + d[1][a[i]] + d[2][a[i]] + d[3][a[i]];
-  sum.innerText = sumval;
-  if (sumval == 0){ sum.className = "zero"; td1.className = "zero"; }
-  tr.appendChild(sum);
   table.appendChild(tr);
  }
  return table;
