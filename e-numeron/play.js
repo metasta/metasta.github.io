@@ -142,6 +142,7 @@ function attack(){
    field[i].disabled = true;
   }
   next_button.style.display = "block";
+  next_button.focus();
  } else {
   field[0].focus();
  }
