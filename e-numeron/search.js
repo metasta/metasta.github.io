@@ -31,6 +31,7 @@ function increaseQuery(t){
  tr.appendChild(td5);
  var this_tr = t.parentNode.parentNode;
  this_tr.parentNode.insertBefore(tr, this_tr.nextSibling);
+ in1.focus();
 
  var buttons = this_tr.parentNode.getElementsByTagName('button');
  for(var i = 0; i < buttons.length; i++){

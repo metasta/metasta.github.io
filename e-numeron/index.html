@@ -41,7 +41,6 @@ input[type="text"].char {
  margin: 0 2px;
  padding: 0;
  border: 1px solid #ccc;
- outline: none;
  font-family: 'Roboto Mono',monospace;
  font-size: var(--input-size);
  text-align: center;
@@ -49,10 +48,12 @@ input[type="text"].char {
  line-height: 1.5;
  background: transparent;
  transition: margin .2s;
+ outline: none;
 }
 
 input[type="text"].char:focus {
- background-color: rgba(35, 154, 254,.4);
+ background-color: rgba(35, 144, 254,.4);
+ border-color: #0080fe;
 }
 
 input[type="text"].char:disabled {
@@ -110,7 +111,7 @@ input[type="text"].dummy {
  margin: 20px auto;
  padding: 15px 20px 20px 20px;
  font-size: 16pt;
- border: none;
+ border: 1px solid #239afe;
  border-radius: 30px;
  background: #239afe;
  color: #fff;
