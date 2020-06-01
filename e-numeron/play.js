@@ -133,7 +133,8 @@ function attack(){
   field[2].value,
   field[3].value ].join("").toLowerCase();
  var [eat, bite] = eat_bite(word);
- board.innerText = attack_counter + ':"' + word + '" ' + eat + 'eat ' + bite + 'bite\n' + board.innerText;
+ var asterisk = (dictCEFRJ.indexOf(word) === -1) ? '<span style="opacity:.5">*</span>' : ' ';
+ board.innerHTML = attack_counter + ':' + asterisk + word + ' ' + eat + 'eat ' + bite + 'bite<br>' + board.innerHTML;
  if (eat == 4) {
   window.getSelection().removeAllRanges();
   attack_button.style.display = "none";
