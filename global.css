@@ -89,7 +89,7 @@ nav > ol ol {
 }
 a {
  text-decoration:inherit;
- color: #0ae;
+ color: var(--accolor);
 }
 strong,b {
  font-weitht: bold;
