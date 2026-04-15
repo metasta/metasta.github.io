@@ -1,12 +1,30 @@
 @charset "utf-8";
+
 :root {
  --family: 'Hiragino Sans',Meiryo,sans-serif;
  --weight: 200;
  --width: 960px;
+ --bgcolor: #ffffff;
+ --fgcolor: #2c2c2c;
+ --accolor: #508ce9;
+ --fggray: #4b4b4b;
+ --bggray: #eaeaea;
 }
+
+@media (prefers-color-scheme: dark) {
+ :root {
+  --bgcolor: #323232;
+  --fgcolor: #ffffff;
+  --accolor: #508ce9;
+  --fggray: #8e8e8e;
+  --bggray: #3e3e3e;
+ }
+}
+
 html {
  font: var(--weight) 12pt/1.9 var(--family);
- color: #333;
+ background-color: var(--bgcolor);
+ color: var(--fgcolor);
 }
 body {
  margin: 0 auto 10em auto;
@@ -24,19 +42,19 @@ h3 {
 section {
  box-sizing: border-box;
  margin: 2em 0;
- border: 3px double #333;
+ border: 3px double var(--fgcolor);
  padding: 1em 2em;
 }
 section.minor {
- border: 1px solid #666;
+ border: 1px solid var(--gray);
  padding: calc(1em + 2px) calc(2em + 2px);
 }
 aside {
  font: 12pt/2 'HiraMaruProN-W4','HG丸ｺﾞｼｯｸM-PRO','HGMaruGothicMPRO',Verdana,sans-serif;
- color: #666;
+ color: var(--fggray);
  box-sizing: border-box;
  margin: 2em;
- border: 1px solid #aaa;
+ border: 1px solid var(--bggray);
  border-radius: 5px;
  padding: 2em;
 }
@@ -111,7 +129,7 @@ table.fig th:not(:first-child){
 }
 tr.u td,
 tr.u th {
- border-bottom: 1px solid #333;
+ border-bottom: 1px solid var(--fgcolor);
 }
 nav#table-of-contents li.H3 {
  font-size: 85%;
@@ -134,14 +152,14 @@ nav#header li {
 nav#header li:not(:first-child):before {
  padding-left: .5em;
  content: "» ";
- color: #aaa;
+ color: var(--bggray);
 }
 footer {
  margin: 4em 0;
  text-align: center;
 }
 footer .copyright {
- color: #999;
+ color: var(--fggray);
 }
 footer .copyright a[href]{
  color: inherit;
