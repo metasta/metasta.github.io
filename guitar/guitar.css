@@ -2,19 +2,19 @@
 
 :root {
  --bgcolor: #ffffff;
- --fgcolor: #2c2c2c;
- --accolor: #508ce9;
- --fggray: #4b4b4b;
- --bggray: #eaeaea;
+ --fgcolor: #202328;
+ --accolor: #2e67d3;
+ --bggray: #e0e4e9;
+ --fggray: #5b636d;
 }
 
 @media (prefers-color-scheme: dark) {
  :root {
-  --bgcolor: #323232;
-  --fgcolor: #ffffff;
-  --accolor: #508ce9;
-  --fggray: #8e8e8e;
-  --bggray: #3e3e3e;
+  --bgcolor: #0e1116;
+  --fgcolor: #f1f6fb;
+  --accolor: #5991f1;
+  --bggray: #30353c;
+  --fggray: #9298a0;
  }
 }
 
