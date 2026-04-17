@@ -6,10 +6,26 @@
 <style>
 :root {
  --input-size: 48pt;
+ --bgcolor: #ffffff;
+ --fgcolor: #202328;
+ --accolor: #2e67d3;
+ --bggray: #e0e4e9;
+ --fggray: #5b636d;
 }
 
+@media (prefers-color-scheme: dark) {
+ :root {
+  --bgcolor: #0e1116;
+  --fgcolor: #f1f6fb;
+  --accolor: #5991f1;
+  --bggray: #30353c;
+  --fggray: #9298a0;
+ }
+}
+ 
 body {
  margin: 0;
+ background-color: var(--bgcolor);
 }
 
 main {
@@ -40,7 +56,7 @@ button {
 input[type="text"].char {
  margin: 0 2px;
  padding: 0;
- border: 1px solid #ccc;
+ border: 1px solid var(--bggray);
  font-family: 'Roboto Mono',monospace;
  font-size: var(--input-size);
  text-align: center;
@@ -53,13 +69,13 @@ input[type="text"].char {
 
 input[type="text"].char:focus {
  background-color: rgba(35, 144, 254,.4);
- border-color: #0080fe;
+ border-color: var(--accolor);
 }
 
 input[type="text"].char:disabled {
  border-color: transparent;
- color: black;
- -webkit-text-fill-color: black;
+ color: var(--fgcolor);
+ -webkit-text-fill-color: var(--fgcolor);
  opacity: 1;
  margin: 0 calc(var(--input-size) * -0.08);
 }
@@ -103,7 +119,7 @@ input[type="text"].dummy {
  font-family: 'Roboto Mono',monospace;
  font-size: 11pt;
  text-align: center;
- color: #444;
+ color: var(--fggray);
 }
 
 #next {
@@ -111,10 +127,10 @@ input[type="text"].dummy {
  margin: 20px auto;
  padding: 15px 20px 20px 20px;
  font-size: 16pt;
- border: 1px solid #239afe;
+ border: 1px solid var(--accolor);
  border-radius: 30px;
- background: #239afe;
- color: #fff;
+ background: var(--accolor);
+ color: var(--bgcolor);
  outline: none;
 }
 </style>
